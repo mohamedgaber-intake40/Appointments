@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'user_name', 'password', 'profileable_type', 'profileable_id','type'
     ];
 
     /**
@@ -36,4 +36,52 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+	 * One-to-one relationship to the profile.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 *
+	 */
+	public function profileable()
+	{
+		return $this->morphTo();
+    }
+
+    /**
+	 * One-to-many relationship to the doctorAppointments.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 *
+	 */
+
+    public function doctorAppointments()
+	{
+		return $this->hasMany(Appointment::class,'doctor_id');
+    }
+
+    /**
+	 * One-to-many relationship to the doctorAppointments.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 *
+	 */
+
+    public function patientAppointments()
+	{
+		return $this->hasMany(Appointment::class,'patient_id');
+    }
+
+     /**
+	 * Has-One-Through relationship to the specialty.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
+	 *
+	 */
+
+    public function specialty()
+	{
+		return $this->hasOneThrough(Specialty::class,DoctorProfile::class);
+    }
+
 }
