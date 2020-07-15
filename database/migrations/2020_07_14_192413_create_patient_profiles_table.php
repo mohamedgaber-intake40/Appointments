@@ -15,14 +15,14 @@ class CreatePatientProfilesTable extends Migration
     {
         Schema::create('patient_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname',50);
-            $table->string('lastname',50);
-            $table->string('email',50)->unique();
-            $table->string('mobile',20)->unique();
-            $table->date('birthdate');
-            $table->unsignedTinyInteger('gender');
-            $table->string('country',50);
-            $table->string('occupation',100);
+            $table->string('firstname',50)->nullable();
+            $table->string('lastname',50)->nullable();
+            $table->string('email',50)->unique()->nullable();
+            $table->string('mobile',20)->unique()->nullable();
+            $table->date('birthdate')->nullable();
+            $table->unsignedTinyInteger('gender')->default(0);
+            $table->string('country',50)->nullable();
+            $table->string('occupation',100)->nullable();
             $table->timestamps();
         });
     }

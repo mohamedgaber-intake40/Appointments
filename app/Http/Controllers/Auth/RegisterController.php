@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\PatientProfile;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -50,8 +53,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'user_name' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -64,10 +66,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $profile = PatientProfile::create();
+
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'user_name' => $data['user_name'],
+            'password' => $data['password'],
+            'profileable_type' => PatientProfile::class,
+            'profileable_id' => $profile->id,
+            'type'=> UserType::PATIENT
+
         ]);
+    }
+
+    protected function redirectTo()
+    {
+        return '/profiles/'. request()->user()->profileable->id . '/edit/';
     }
 }
