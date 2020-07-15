@@ -29,6 +29,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['name'];
+
     /**
 	 * Set the user password hash.
 	 *
@@ -85,12 +92,10 @@ class User extends Authenticatable
 		return $this->hasMany(Appointment::class,'patient_id');
     }
 
-     /**
-	 * Has-One-Through relationship to the specialty.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
-	 *
-	 */
+    public function getNameAttribute()
+    {
+        return $this->attributes['name'] = $this->profileable->firstname .' '. $this->profileable->lastname;
+    }
 
 
 }
