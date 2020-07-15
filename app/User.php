@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+	 * Set the user password hash.
+	 *
+	 * @param string $value The user password as *plain text*.
+	 *
+	 * @return void
+	 */
+    public function setPasswordAttribute(string $value)
+    {
+        $this->attributes['password']=Hash::make($value);
+    }
 
     /**
      * The attributes that should be cast to native types.
@@ -79,9 +92,5 @@ class User extends Authenticatable
 	 *
 	 */
 
-    public function specialty()
-	{
-		return $this->hasOneThrough(Specialty::class,DoctorProfile::class);
-    }
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-class UserGender
+class UserType
 {
 	const ADMIN = 0;
 	const DOCTOR = 1;

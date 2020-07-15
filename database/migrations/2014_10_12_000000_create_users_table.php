@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('user_name','50')->unique();
             $table->string('password');
-            $table->morphs('profileable');
+            $table->nullableMorphs('profileable');
             $table->unsignedTinyInteger('type');
             $table->rememberToken();
             $table->timestamps();

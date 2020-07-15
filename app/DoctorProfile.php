@@ -24,6 +24,18 @@ class DoctorProfile extends Model
 	public function user()
 	{
 		return $this->morphOne(User::class, 'profileable');
-	}
+    }
+
+     /**
+	 * One-to-One- relationship to the specialty.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
+	 *
+	 */
+
+    public function specialty()
+	{
+		return $this->belongsTo(Specialty::class);
+    }
 
 }
