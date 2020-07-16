@@ -227,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'UserGender' => App\Enums\UserGender::class,
+        'UserType' => App\Enums\UserType::class,
 
     ],
 

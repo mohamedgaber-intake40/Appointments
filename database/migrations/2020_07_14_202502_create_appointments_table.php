@@ -19,8 +19,8 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->dateTime('date')->nullable();
             $table->unsignedBigInteger('pain_id');
-            $table->boolean('is_patient_confirm')->nullable();
-            $table->boolean('is_doctor_confirm')->nullable();
+            $table->boolean('is_patient_refuse')->default(0);
+            $table->boolean('is_doctor_refuse')->default(0);
             $table->timestamps();
         });
     }

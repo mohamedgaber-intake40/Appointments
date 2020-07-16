@@ -11,7 +11,7 @@ $factory->define(Appointment::class, function (Faker $faker) {
         'doctor_id'=>0,
         'date'=>$faker->dateTime(),
         'pain_id'=>0,
-        'is_patient_confirm'=>rand(0,1),
-        'is_doctor_confirm'=>rand(0,1),
+        'is_patient_refuse'=>rand(0,1),
+        'is_doctor_refuse'=>rand(0,1),
     ];
 });

@@ -15,11 +15,8 @@ class AppointmentSeeder extends Seeder
      */
     public function run()
     {
-        $users=User::where('profileable_type', 'App\\'.DoctorProfile::class)
-        ->inRandomOrder()
-        ->take(5)
-        ->get();
-        $users->each(function ($doctor) {
+        User::where('profileable_type', 'App\\'.DoctorProfile::class)->get()
+        ->each(function ($doctor) {
             User::where('profileable_type', PatientProfile::class)
             ->inRandomOrder()
             ->take(5)
