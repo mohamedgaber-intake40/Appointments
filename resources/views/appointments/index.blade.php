@@ -20,8 +20,17 @@
                         @endif
 
                         @if (Session::has('updated'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{Session::get('updated')}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+                    @if($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{Session::get('updated')}}
+                            {{$errors->first()}}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -56,24 +65,26 @@
                                 <td> {{ $appointment->pain->title }} </td>
 
                                 @if( ( $appointment->date && !$appointment->is_patient_refuse && Auth::user()->type == UserType::PATIENT ) || (Auth::user()->type == UserType::DOCTOR &&!$appointment->is_doctor_refuse ))
-                                <form action="{{  route('appointments.update',['appointment'=>$appointment]) }}" method="POST">
-                                    @csrf
-                                    @method('put')
-                                    <td> <button class="btn btn-secondary">Refuse</button> </td>
-                                    <input type="hidden" value="1" name="refuse">
-                                </form>
+                                <td>
+                                    <form action="{{  route('appointments.update',['appointment'=>$appointment]) }}" method="POST">
+                                        @csrf
+                                        @method('put')
+                                         <button class="btn btn-secondary">Refuse </button>
+                                        <input type="hidden" value="1" name="refuse">
+                                    </form>
+                                </td>
                                 @endif
                                 @if(!$appointment->date && Auth::user()->type == UserType::PATIENT)
                                     <td> <a  href="{{ route('appointments.edit',['appointment'=>$appointment]) }}" class="btn btn-warning" >Edit</a> </td>
                                 @endif
                                 @if(Auth::user()->type == UserType::PATIENT)
-
                                     <td>
                                         <form action="{{ route('appointments.destroy',['appointment'=>$appointment]) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger">Delete</button> </td>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
+                                    </td>
                                 @endif
                             </tr>
                         @empty

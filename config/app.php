@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -228,6 +229,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'UserGender' => App\Enums\UserGender::class,
         'UserType' => App\Enums\UserType::class,
+        'AppointmentStatus' => App\Enums\AppointmentStatus::class,
+        'Carbon'=> Carbon\Carbon::class
+
 
     ],
 

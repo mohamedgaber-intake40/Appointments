@@ -22,9 +22,9 @@ class Specialty extends Model
 	 *
 	 */
 
-    public function doctors()
+    public function doctorProfiles()
 	{
-		return $this->hasManyThrough(User::class,DoctorProfile::class);
+		return $this->hasMany(DoctorProfile::class);
     }
 
      /**

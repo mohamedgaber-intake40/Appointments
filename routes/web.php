@@ -27,5 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/profiles/{profile}', 'ProfileController@update')->name('profiles.update');
     Route::get('/profiles/{profile}', 'ProfileController@show')->name('profiles.show');
     Route::resource('appointments','AppointmentController')->except(['show']);
+
+    Route::group(['prefix'=>'dashboard','as'=>'dashboard.','namespace'=>'dashboard'],function(){
+        Route::resource('appointments','AppointmentController');
+    });
 });
 

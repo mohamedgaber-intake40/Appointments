@@ -34,8 +34,8 @@ class Pain extends Model
 	 *
 	 */
 
-    public function specialties()
+    public function specialty()
 	{
-		return $this->hasMany(Specialty::class);
+		return $this->belongsTo(Specialty::class);
     }
 }

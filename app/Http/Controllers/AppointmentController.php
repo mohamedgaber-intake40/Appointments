@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\Enums\UserType;
+use App\Http\Requests\AppointmentRequest;
 use App\Pain;
 use Illuminate\Http\Request;
 
@@ -44,7 +45,7 @@ class AppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AppointmentRequest $request)
     {
         $request->user()->patientAppointments()->create(['pain_id' => $request->pain]);
         return redirect()->route('appointments.index')->with(['success'=> 'Appointment Created']);
@@ -71,7 +72,7 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Appointment $appointment)
+    public function update(AppointmentRequest $request, Appointment $appointment)
     {
         //authorization
         if($request->refuse)
@@ -88,7 +89,7 @@ class AppointmentController extends Controller
             $appointment->update(['is_patient_refuse'=>1]);
         else
             $appointment->update(['is_doctor_refuse'=>1]);
-            
+
         return redirect()->route('appointments.index')->with(['updated'=>'Appointment refused']);
     }
 
