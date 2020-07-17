@@ -20,16 +20,6 @@
                                     <a href="{{ route('appointments.show',['appointment'=>$appointment]) }}" class="btn btn-info mx-auto text-center">View Appointment</a>
                                 </div>
                             </div>
-
-
-
-
-
-
-
-
-
-
                     </div>
                 </div>
             </div>

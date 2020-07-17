@@ -46,6 +46,10 @@ class User extends Authenticatable
 	{
 		static::deleting(function ($user) {
 
+            $user->profileable->notifications->each(function($notification){
+                $notification->delete();
+            });
+
             $user->profileable->delete();
 
             if($user->type == UserType::PATIENT)

@@ -11,7 +11,7 @@
                                 <h5 class="col-md-4 text-md-center">Date:</h5>
 
                                 <div class="col-md-6 text-md-center">
-                                    <h5>{{ $appointment->date }}</h5>
+                                    <h5>{{ optional($appointment->date)->toDayDateTimeString() }}</h5>
                                 </div>
                             </div>
                             <div class="form-group row ">
@@ -46,14 +46,14 @@
                                 <h5 class="col-md-4 text-md-center">Created At:</h5>
 
                                 <div class="col-md-6 text-md-center">
-                                    <h5>{{ $appointment->created_at }}</h5>
+                                    <h5>{{ $appointment->created_at->toDayDateTimeString() }}</h5>
                                 </div>
                             </div>
                             <div class="form-group row ">
                                 <h5 class="col-md-4 text-md-center">Updated At:</h5>
 
                                 <div class="col-md-6 text-md-center">
-                                    <h5>{{ $appointment->updated_at }}</h5>
+                                    <h5>{{ $appointment->updated_at->toDayDateTimeString() }}</h5>
                                 </div>
                             </div>
 

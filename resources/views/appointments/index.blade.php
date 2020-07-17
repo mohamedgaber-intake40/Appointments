@@ -40,7 +40,7 @@
                 </div>
                 <!-- end Notifications -->
 
-                <table class="table text-center " style="min-height: 600px;">
+                <table class="table text-center " >
                     <thead class="thead-dark">
                         <th>Date</th>
                         @if(Auth::user()->type === UserType::PATIENT)
@@ -54,7 +54,7 @@
                     <tbody>
                         @forelse ($appointments as $appointment)
                             <tr>
-                                <td>{{ $appointment->date }}</td>
+                                <td>{{ optional($appointment->date)->toDayDateTimeString() }}</td>
 
                                 @if(Auth::user()->type === UserType::PATIENT)
                                     <td>{{ optional($appointment->doctor)->name }}</td>

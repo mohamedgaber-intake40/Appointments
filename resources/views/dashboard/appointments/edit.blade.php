@@ -39,7 +39,8 @@
                                     <label for="date" class="col-md-2 col-form-label text-md-right">Date</label>
 
                                     <div class="col-md-8">
-                                        <input  type="datetime-local" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') ? old('date') : Carbon::parse($appointment->date)->format('h:i d/m/y ')  }}" required >
+                                        <input  type="datetime-local" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') ? old('date') : Carbon::parse($appointment->date)->format('h:i d/m/y ')  }}"
+                                        required >
                                         @error('date')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

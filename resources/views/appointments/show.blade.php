@@ -35,7 +35,7 @@
                                 <h5 for="date" class="col-md-4 text-md-right">Date </h5>
 
                                 <div class="col-md-6">
-                                    <h5>{{ $appointment->date }}</h5>
+                                    <h5>{{ optional($appointment->date)->toDayDateTimeString() }}</h5>
                                 </div>
                             </div>
 
@@ -43,7 +43,7 @@
                                 <h5 for="created_at" class="col-md-4  text-md-right">Created At </h5>
 
                                 <div class="col-md-6">
-                                    <h5>{{ $appointment->created_at }}</h5>
+                                    <h5>{{ $appointment->created_at->toDayDateTimeString() }}</h5>
                                 </div>
                             </div>
 
@@ -51,7 +51,7 @@
                                 <h5 for="updated_at" class="col-md-4  text-md-right">Updated At </h5>
 
                                 <div class="col-md-6">
-                                    <h5>{{ $appointment->updated_at }}</h5>
+                                    <h5>{{ $appointment->updated_at->toDayDateTimeString() }}</h5>
                                 </div>
                             </div>
 

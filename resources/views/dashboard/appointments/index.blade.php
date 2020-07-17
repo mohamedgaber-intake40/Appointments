@@ -28,7 +28,7 @@
                 </div>
                 <!-- end Notifications -->
 
-                <table class="table text-center " style="min-height: 600px;">
+                <table class="table text-center " >
                     <thead class="thead-dark">
                         <th>#</th>
                         <th>Date</th>
@@ -42,14 +42,14 @@
                         @forelse ($appointments as $appointment)
                             <tr>
                                 <td>{{ $appointment->id }}</td>
-                                <td>{{ $appointment->date }}</td>
+                                <td>{{ optional($appointment->date)->toDayDateTimeString() }}</td>
                                 <td>{{ optional($appointment->doctor)->name }}</td>
                                 <td>{{ $appointment->patient->name }}</td>
                                 <td> {{ $appointment->pain->title }} </td>
                                 <td> {{ AppointmentStatus::$statuses[$appointment->status] }}</td>
 
                                 @if ( $appointment->status ===  AppointmentStatus::WAITING)
-                                    <td> <a href="{{ route('dashboard.appointments.edit',['appointment'=>$appointment]) }}" class="btn btn-primary">Assign Doctor</a> </td>
+                                    <td> <a href="{{ route('dashboard.appointments.edit',['appointment'=>$appointment]) }}" class="btn btn-info btn-sm">Assign Doctor</a> </td>
                                 @endif
 
                                 @if ( $appointment->status ===  AppointmentStatus::BOTH_REFUSE )

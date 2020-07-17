@@ -68,20 +68,27 @@ class AppointmentController extends Controller
         else if( $appointment->status == AppointmentStatus::PATIENT_REFUSE )
             return $this->reschedule($request , $appointment);
 
-            $appointment->update(
-                $request->only( ['date','doctor_id'] ) +
-                ( $appointment->status == AppointmentStatus::BOTH_REFUSE ? ['is_doctor_refuse' => 0 , 'is_patient_refuse' => 0 ] : [] )
-            );
+        $message = '';
         if($appointment->status == AppointmentStatus::BOTH_REFUSE )
         {
             $message = "The Appointment that was scheduled at {$appointment->date->toDayDateTimeString()} its Doctor has been reassigned  ";
             $message .="and has been rescheduled to {$appointment->date->toDayDateTimeString()}";
         }
-        else
+
+        $appointment->update(
+            $request->only( ['date','doctor_id'] ) +
+            ( $appointment->status == AppointmentStatus::BOTH_REFUSE ? ['is_doctor_refuse' => 0 , 'is_patient_refuse' => 0 ] : [] )
+        );
+        //new appointment
+        if(!$message)
         {
             $message = "The Appointment with Pain {$appointment->pain->title} has been scheduled at {$appointment->date->toDayDateTimeString()} ";
         }
+
         $appointment->patient->profileable->notify(new AppointmentUpdatedNotification($appointment , $message));
+        $doctor_message =  "The Appointment with Pain {$appointment->pain->title} has been assigned to you at {$appointment->date->toDayDateTimeString()} ";
+
+        $appointment->doctor->profileable->notify(new AppointmentUpdatedNotification($appointment , $doctor_message));
 
         return redirect()->route('dashboard.appointments.index')->with(['success'=>'Appointment updated']);
 

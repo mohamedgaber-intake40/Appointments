@@ -44,7 +44,14 @@
                             <li class="ml-2">
                                 <a href="{{ route('notifications.index') }}">Notifications</a>
                             </li>
-                         @endif
+                        @else
+                            <li>
+                                <a href="{{ route('dashboard.appointments.index') }}">Appointments</a>
+                            </li>
+                            <li class="ml-2">
+                                <a href="{{ route('dashboard.users.index') }}">Users</a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

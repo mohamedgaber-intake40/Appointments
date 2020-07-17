@@ -79,7 +79,7 @@
                                     <h5 class="col-md-4 col-form-label text-md-right">Specialty</h5>
 
                                     <div class="col-md-6">
-                                        <h5>{{ $profile->specialty->title }}</h5>
+                                        <h5>{{ optional($profile->specialty)->title }}</h5>
                                     </div>
                                 </div>
                             @endif

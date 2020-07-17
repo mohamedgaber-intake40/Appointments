@@ -19,7 +19,7 @@
                 </div>
                 <!-- end Notifications -->
 
-                <table class="table text-center " style="min-height: 600px;">
+                <table class="table text-center " >
                     <thead class="thead-dark">
                         <th>#</th>
                         <th>User Name</th>
