@@ -44,7 +44,7 @@ class ProfileController extends Controller
     {
         if($request->new_password)
         {
-            return $this->changePassword($request);
+            $this->changePassword($request);
         }
         $profile = $request->user()
         ->profileable
@@ -67,8 +67,8 @@ class ProfileController extends Controller
         if(Hash::check($request->password , $request->user()->password))
         {
             $request->user()->update(['password'=>$request->new_password]);
-            return redirect()->route('profiles.show',['profile',$request->user()->profileable])
-                   ->with(['success','Password Changed']);
+            // return redirect()->route('profiles.show',['profile',$request->user()->profileable])
+            //        ->with(['success','Password Changed']);
         }
         else
         {

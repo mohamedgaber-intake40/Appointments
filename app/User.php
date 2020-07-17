@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\UserType;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -35,6 +36,34 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = ['name'];
+
+    /**
+	 * Perform any actions required after the model boots.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		static::deleting(function ($user) {
+
+            $user->profileable->delete();
+
+            if($user->type == UserType::PATIENT)
+            {
+                $user->patientAppointments->each(function($appointment){
+                    $appointment->delete();
+                });
+            }
+            // change doctor appointments status to waiting
+            if($user->type == UserType::DOCTOR)
+            {
+                $user->doctorAppointments->each(function($appointment){
+                    $appointment->update(['is_doctor_refuse'=>0 ,'is_patient_refuse'=>0 , 'date'=>null , 'doctor_id'=>null ]);
+                });
+            }
+
+		});
+	}
 
     /**
 	 * Set the user password hash.

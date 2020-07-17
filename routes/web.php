@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix'=>'dashboard','as'=>'dashboard.','namespace'=>'dashboard'],function(){
         Route::resource('appointments','AppointmentController');
+        Route::resource('users','UserController');
     });
 });
 

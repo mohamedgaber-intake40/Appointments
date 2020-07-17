@@ -13,7 +13,7 @@ class UserType
 	 *
 	 * @var array
 	 */
-	public static $genders = [
+	public static $types = [
 		'Admin',
         'Doctor',
         'Patient'

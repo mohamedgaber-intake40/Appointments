@@ -1,5 +1,6 @@
 <?php
 
+use App\AdminProfile;
 use App\DoctorProfile;
 use App\Enums\UserType;
 use App\PatientProfile;
@@ -15,13 +16,19 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $admin_profile=AdminProfile::create([
+            'firstname'=>'admin',
+            'lastname'=>'admin'
+        ]);
+
         User::create([
             'user_name'=>'admin',
             'password'=>'12345678',
-            'profileable_type'=>null,
-            'profileable_id'=>null,
+            'profileable_type'=>AdminProfile::class,
+            'profileable_id'=>$admin_profile->id,
             'type'=>UserType::ADMIN
         ]);
+
 
         factory(PatientProfile::class,10)->create()->each(function($profile){
             factory(User::class)->create([
