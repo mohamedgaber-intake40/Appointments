@@ -1,0 +1,13 @@
+a:hover
+{
+    text-decoration: none;
+}
+.notifications
+{
+    background-color: #ddd;
+}
+
+.dashboard:hover
+{
+   background-color: #17a2b8 !important;
+}

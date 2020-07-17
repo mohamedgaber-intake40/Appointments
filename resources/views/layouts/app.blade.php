@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    
+
 
     <!-- bootstrap4 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -37,7 +37,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if(Auth::check() && Auth::user()->type != UserType::ADMIN)
+                            <li>
+                            <a href="{{ route('appointments.index') }}">Appointments</a>
+                            </li>
+                            <li class="ml-2">
+                                <a href="{{ route('notifications.index') }}">Notifications</a>
+                            </li>
+                         @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -60,6 +67,9 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profiles.show',['profile'=>Auth::user()->profileable->id]) }}" >Profile</a>
+                                    @if(Auth::user()->type == UserType::ADMIN)
+                                        <a class="dropdown-item" href="{{ route('dashboard.index') }}" >Dashboard</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

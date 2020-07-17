@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/notifications/{notification}','NotificationController@show')->name('notifications.show');
 
     Route::group(['prefix'=>'dashboard','as'=>'dashboard.','namespace'=>'dashboard'],function(){
+        Route::get('/','DashboardController@index')->name('index');
         Route::resource('appointments','AppointmentController');
         Route::resource('users','UserController');
     });
