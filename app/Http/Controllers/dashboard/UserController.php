@@ -10,8 +10,6 @@ use App\Http\Requests\UserRequest;
 use App\PatientProfile;
 use App\Specialty;
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -39,7 +37,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
@@ -66,8 +64,6 @@ class UserController extends Controller
         );
 
         return redirect()->route('dashboard.users.index')->with(['success'=>'User Created']);
-
-
     }
 
     /**
@@ -103,7 +99,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
@@ -128,6 +124,13 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Update Doctor User Data
+     *
+     * @param \App\Http\Requests\UserRequest $request
+     * @param \App\User $user ( type = Doctor )
+     * @return void
+     */
     private function updateDoctor($request , $user)
     {
         if($request->specialty != $user->profileable->specialty_id) //specialty changed
@@ -138,6 +141,13 @@ class UserController extends Controller
         $user->profileable->update($request->only(['firstname','lastname','specialty']));
     }
 
+    /**
+     * Update Patient User Data
+     *
+     * @param \App\Http\Requests\UserRequest $request
+     * @param \App\User $user ( type = Patient )
+     * @return void
+     */
     private function updatePatient($request , $user)
     {
         $user->update($request->only(['user_name']));
@@ -145,12 +155,26 @@ class UserController extends Controller
         ]));
     }
 
+    /**
+     * Update Admin User Data
+     *
+     * @param \App\Http\Requests\UserRequest $request
+     * @param \App\User $user ( type = Admin )
+     * @return void
+     */
     private function updateAdmin($request , $user)
     {
         $user->update($request->only(['user_name']));
         $user->profileable->update($request->only(['firstname','lastname']));
     }
 
+    /**
+     * Change User Type
+     *
+     * @param \App\Http\Requests\UserRequest $request
+     * @param \App\User $user
+     * @return void
+     */
     private function changeType($request , $user)
     {
         $this->modifyCurrentAppointments($user);
@@ -175,6 +199,12 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Modify User Current Appointments
+     *
+     * @param \App\User $user
+     * @return void
+     */
     private function modifyCurrentAppointments($user)
     {
         if($user->type == UserType::PATIENT)

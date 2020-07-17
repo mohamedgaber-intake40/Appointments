@@ -32,7 +32,7 @@ class DoctorProfile extends Model
      /**
 	 * One-to-One- relationship to the specialty.
 	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\hasOneThrough
+	 * @return \Illuminate\Database\Eloquent\Relations\belongsTo
 	 *
 	 */
 

@@ -17,11 +17,17 @@ class Appointment extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $appends = ['status'];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array
     */
-    protected $appends = ['status'];
     protected $casts = [
 		'date' => 'datetime'
 	];
@@ -49,7 +55,7 @@ class Appointment extends Model
     }
 
     /**
-	 * Many-to-one relationship to the doctor.
+	 * Many-to-one relationship to the pain.
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 *
@@ -59,6 +65,11 @@ class Appointment extends Model
 		return $this->belongsTo(Pain::class);
     }
 
+    /**
+     * Status Attribute Accessor
+     *
+     * @return int
+     */
     public function getStatusAttribute()
     {
        $status=AppointmentStatus::ACCEPTED;

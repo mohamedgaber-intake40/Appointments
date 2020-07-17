@@ -6,7 +6,6 @@ use App\Appointment;
 use App\Enums\AppointmentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DashBoardAppointmentRequest;
-use App\Notifications\AppointmentUpdated;
 use App\Notifications\AppointmentUpdatedNotification;
 
 class AppointmentController extends Controller
@@ -56,7 +55,7 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\DashBoardAppointmentRequest  $request
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
@@ -93,7 +92,13 @@ class AppointmentController extends Controller
         return redirect()->route('dashboard.appointments.index')->with(['success'=>'Appointment updated']);
 
     }
-
+    /**
+     * Reassign Doctor to Appointment
+     *
+     * @param  \App\Http\Requests\DashBoardAppointmentRequest  $request
+     * @param  \App\Appointment  $appointment
+     * @return \Illuminate\Http\Response
+     */
     private function reassignDoctor($request , $appointment)
     {
         $appointment->update( $request->only(['doctor_id']) + ['is_doctor_refuse' => 0 ] );
@@ -104,6 +109,14 @@ class AppointmentController extends Controller
         return redirect()->route('dashboard.appointments.index')->with(['success'=>'Doctor reassigned']);
 
     }
+
+     /**
+     * Reschedule Doctor to Appointment
+     *
+     * @param  \App\Http\Requests\DashBoardAppointmentRequest  $request
+     * @param  \App\Appointment  $appointment
+     * @return \Illuminate\Http\Response
+     */
     private function reschedule($request , $appointment)
     {
         $old_date = $appointment->date->toDayDateTimeString();

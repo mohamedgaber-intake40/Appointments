@@ -16,9 +16,9 @@ class Specialty extends Model
     ];
 
     /**
-	 * Has-Many-Through relationship to the doctors.
+	 * One-to-Many relationship to the Doctor Profiles.
 	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+	 * @return \Illuminate\Database\Eloquent\Relations\hasMany
 	 *
 	 */
 

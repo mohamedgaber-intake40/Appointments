@@ -6,7 +6,6 @@ use App\Appointment;
 use App\Enums\AppointmentStatus;
 use App\Enums\UserType;
 use App\Http\Requests\AppointmentRequest;
-use App\Notifications\AppointmentUpdatedNotification;
 use App\Pain;
 use Illuminate\Http\Request;
 
@@ -44,7 +43,7 @@ class AppointmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\AppointmentRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(AppointmentRequest $request)
@@ -80,7 +79,7 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\AppointmentRequest  $request
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
@@ -117,7 +116,13 @@ class AppointmentController extends Controller
         }
             abort(403);
     }
-
+    /**
+     *  Refuse the Appointment
+     *
+     * @param \App\Http\Requests\AppointmentRequest $request
+     * @param \App\Appointment $appointment
+     * @return void
+     */
     private function refuse($request,$appointment)
     {
         if($request->user()->type == userType::PATIENT)
@@ -131,6 +136,7 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  Request $request
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */

@@ -9,7 +9,7 @@ class UserType
 	const PATIENT = 2;
 
 	/**
-	 * The user available genders.
+	 * The user available types.
 	 *
 	 * @var array
 	 */

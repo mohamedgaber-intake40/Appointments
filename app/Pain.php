@@ -28,9 +28,9 @@ class Pain extends Model
     }
 
     /**
-	 * One-to-many relationship to the specialties.
+	 * Many-to-One relationship to the specialty.
 	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 * @return \Illuminate\Database\Eloquent\Relations\belongsTo
 	 *
 	 */
 

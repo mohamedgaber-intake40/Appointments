@@ -124,7 +124,11 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Appointment::class,'patient_id');
     }
-
+    /**
+     * Name Attribute Accessor
+     *
+     * @return string
+     */
     public function getNameAttribute()
     {
         return $this->attributes['name'] = $this->profileable->firstname .' '. $this->profileable->lastname;

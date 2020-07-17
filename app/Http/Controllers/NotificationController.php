@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class NotificationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of User Notifications
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,7 +23,7 @@ class NotificationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Notification  $notification
+     * @param  string  $notification
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request ,$notification)

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PatientProfileRequest;
-use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +11,6 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
@@ -24,7 +22,6 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
@@ -36,8 +33,7 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profile  $profile
+     * @param  \App\Http\Requests\PatientProfileRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(PatientProfileRequest $request)
@@ -61,15 +57,18 @@ class ProfileController extends Controller
         ));
         return redirect()->route('profiles.show',['profile',$profile])->with(['success','Profile Updated']);;
     }
-
+    /**
+     * Change User Password
+     *
+     * @param \App\Http\Requests\PatientProfileRequest $request
+     * @return void
+     */
     private function changePassword($request)
     {
         $user = $request->user();
         if(Hash::check($request->password ,$user->password))
         {
            $user->update(['password'=>$request->new_password]);
-            // return redirect()->route('profiles.show',['profile',$request->user()->profileable])
-            //        ->with(['success','Password Changed']);
         }
         else
         {
