@@ -22,6 +22,9 @@ class Appointment extends Model
      * @var array
     */
     protected $appends = ['status'];
+    protected $casts = [
+		'date' => 'datetime'
+	];
 
     /**
 	 * Many-to-one relationship to the patient.

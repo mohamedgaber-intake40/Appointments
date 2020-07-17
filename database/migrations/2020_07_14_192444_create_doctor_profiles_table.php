@@ -17,6 +17,7 @@ class CreateDoctorProfilesTable extends Migration
             $table->id();
             $table->string('firstname',50)->nullable();
             $table->string('lastname',50)->nullable();
+            $table->string('email',50)->unique()->nullable();
             $table->unsignedBigInteger('specialty_id')->nullable();
             $table->timestamps();
         });

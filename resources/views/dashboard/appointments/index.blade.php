@@ -58,7 +58,7 @@
 
                                 @elseif ( $appointment->status ===  AppointmentStatus::DOCTOR_REFUSE)
 
-                                    <td> <a href="{{ route('dashboard.appointments.edit',['appointment'=>$appointment]) }}" class="btn btn-info">Reassign Doctor</a> </td>
+                                    <td> <a href="{{ route('dashboard.appointments.edit',['appointment'=>$appointment]) }}" class="btn btn-info btn-sm">Reassign Doctor</a> </td>
 
                                 @elseif (  $appointment->status ===  AppointmentStatus::PATIENT_REFUSE)
 

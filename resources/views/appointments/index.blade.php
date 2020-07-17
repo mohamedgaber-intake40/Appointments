@@ -74,9 +74,11 @@
                                     </form>
                                 </td>
                                 @endif
+
                                 @if(!$appointment->date && Auth::user()->type == UserType::PATIENT)
                                     <td> <a  href="{{ route('appointments.edit',['appointment'=>$appointment]) }}" class="btn btn-warning" >Edit</a> </td>
                                 @endif
+
                                 @if(Auth::user()->type == UserType::PATIENT)
                                     <td>
                                         <form action="{{ route('appointments.destroy',['appointment'=>$appointment]) }}" method="POST">
@@ -86,6 +88,8 @@
                                         </form>
                                     </td>
                                 @endif
+
+                                <td> <a  href="{{ route('appointments.show',['appointment'=>$appointment]) }}" class="btn btn-info" >Show</a> </td>
                             </tr>
                         @empty
                             <td colspan="6">No Appointments yet</td>

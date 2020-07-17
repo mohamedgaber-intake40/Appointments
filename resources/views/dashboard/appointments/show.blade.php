@@ -25,7 +25,7 @@
                                 <h5 class="col-md-4 text-md-center">Doctor:</h5>
 
                                 <div class="col-md-6 text-md-center">
-                                    <h5>{{ $appointment->doctor->name }}</h5>
+                                    <h5>{{ optional($appointment->doctor)->name }}</h5>
                                 </div>
                             </div>
                             <div class="form-group row ">

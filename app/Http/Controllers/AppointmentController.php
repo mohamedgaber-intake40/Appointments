@@ -51,7 +51,17 @@ class AppointmentController extends Controller
         return redirect()->route('appointments.index')->with(['success'=> 'Appointment Created']);
     }
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Appointment  $appointment
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Appointment $appointment)
+    {
+        $appointment->load(['doctor','doctor.profileable','patient','patient.profileable','pain']);
+        return view('appointments.show',['appointment'=>$appointment]);
+    }
 
     /**
      * Show the form for editing the specified resource.

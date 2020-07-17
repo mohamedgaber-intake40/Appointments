@@ -6,7 +6,8 @@ use App\Appointment;
 use App\Enums\AppointmentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DashBoardAppointmentRequest;
-
+use App\Notifications\AppointmentUpdated;
+use App\Notifications\AppointmentUpdatedNotification;
 
 class AppointmentController extends Controller
 {
@@ -72,6 +73,10 @@ class AppointmentController extends Controller
                 ( $appointment->status == AppointmentStatus::BOTH_REFUSE ? ['is_doctor_refuse' => 0 , 'is_patient_refuse' => 0 ] : [] )
             );
 
+        $message = "The Appointment that was scheduled at {$appointment->date->toDayDateTimeString()} its Doctor has been reassigned  ";
+        $message .="and has been rescheduled to {$appointment->date->toDayDateTimeString()}";
+        $appointment->patient->profileable->notify(new AppointmentUpdatedNotification($appointment , $message));
+
         return redirect()->route('dashboard.appointments.index')->with(['success'=>'Appointment updated']);
 
     }
@@ -79,12 +84,18 @@ class AppointmentController extends Controller
     private function reassignDoctor($request , $appointment)
     {
         $appointment->update( $request->only(['doctor_id']) + ['is_doctor_refuse' => 0 ] );
+        $message = "The Appointment that was scheduled at {$appointment->date->toDayDateTimeString()} its Doctor has been reassigned ";
+        $appointment->patient->profileable->notify(new AppointmentUpdatedNotification($appointment , $message));
         return redirect()->route('dashboard.appointments.index')->with(['success'=>'Doctor reassigned']);
 
     }
     private function reschedule($request , $appointment)
     {
+        $old_date = $appointment->date->toDayDateTimeString();
         $appointment->update( $request->only(['date']) + ['is_patient_refuse' => 0 ]);
+        $message = "The Appointment that was scheduled at {$old_date} has been  rescheduled to {$appointment->date->toDayDateTimeString()}";
+        $appointment->patient->profileable->notify(new AppointmentUpdatedNotification($appointment , $message));
+        $appointment->doctor->profileable->notify(new AppointmentUpdatedNotification($appointment , $message));
         return redirect()->route('dashboard.appointments.index')->with(['success'=>'Appointment rescheduled']);
 
     }

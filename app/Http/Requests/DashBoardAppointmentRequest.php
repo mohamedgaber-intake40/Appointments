@@ -32,7 +32,6 @@ class DashBoardAppointmentRequest extends FormRequest
             {
                 return [
                     'doctor_id'=>'required|exists:users,id',
-                    'firstname'=>'required|string|max:50',
 
                 ];
 

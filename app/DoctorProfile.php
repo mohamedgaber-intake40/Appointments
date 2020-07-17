@@ -3,16 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class DoctorProfile extends Model
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'specialty_id','firstname', 'lastname',
+        'specialty_id','firstname', 'lastname','email'
     ];
 
     /**
