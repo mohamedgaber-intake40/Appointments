@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Pain::class, function (Faker $faker) {
     return [
-        'title'=>$faker->name,
+        'title'=>$faker->unique()->name,
         'specialty_id'=>0
 
     ];

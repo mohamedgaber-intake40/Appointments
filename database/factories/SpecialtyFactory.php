@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Specialty::class, function (Faker $faker) {
     return [
-        'title'=>$faker->name
+        'title'=>$faker->unique()->name
 
     ];
 });
