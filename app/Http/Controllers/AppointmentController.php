@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\Enums\AppointmentStatus;
 use App\Enums\UserType;
 use App\Http\Requests\AppointmentRequest;
+use App\Notifications\AppointmentUpdatedNotification;
 use App\Pain;
 use Illuminate\Http\Request;
 
@@ -84,13 +86,36 @@ class AppointmentController extends Controller
      */
     public function update(AppointmentRequest $request, Appointment $appointment)
     {
-        //authorization
+        $user = $request->user();
         if($request->refuse)
-            return $this->refuse($request,$appointment);
+            if(
+                    (
+                        $user->type == UserType::PATIENT &&
+                        $appointment->patient->id == $user->id &&
+                        $appointment->date &&
+                        !$appointment->is_patient_refuse
+                    ) ||
+                    (
+                        $user->type == UserType::DOCTOR &&
+                        $appointment->doctor->id == $user->id &&
+                        !$appointment->is_doctor_refuse
+                    )
+            )
+                return $this->refuse($request,$appointment);
+            else
+                abort(403);
 
-        //authorization
-        $appointment->update(['pain_id'=>$request->pain]);
-        return redirect()->route('appointments.index')->with(['success'=>'Appointment updated']);
+        if(
+            $user->type == UserType::PATIENT &&
+            $appointment->patient->id == $user->id &&
+            $appointment->status == AppointmentStatus::WAITING
+        )
+        {
+
+            $appointment->update(['pain_id'=>$request->pain]);
+            return redirect()->route('appointments.index')->with(['success'=>'Appointment updated']);
+        }
+            abort(403);
     }
 
     private function refuse($request,$appointment)
@@ -109,11 +134,14 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Appointment $appointment)
+    public function destroy(Request $request , Appointment $appointment)
     {
-        // authorization
-        $appointment->delete();
-        return redirect()->route('appointments.index')->with(['success'=>'Appointment deleted']);
-
+        $user=$request->user();
+        if($user->type == UserType::PATIENT && $appointment->patient->id == $user->id )
+        {
+            $appointment->delete();
+            return redirect()->route('appointments.index')->with(['success'=>'Appointment deleted']);
+        }
+        abort(403);
     }
 }

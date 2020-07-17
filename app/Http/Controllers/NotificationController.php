@@ -28,7 +28,7 @@ class NotificationController extends Controller
      */
     public function show(Request $request ,$notification)
     {
-        $notification = $request->user()->profileable->notifications()->find($notification);
+        $notification = $request->user()->profileable->notifications()->findOrFail($notification);
         $appointment  = Appointment::find($notification->data['appointment_id']);
         if (!$notification->read_at)
 			$notification->markAsRead();

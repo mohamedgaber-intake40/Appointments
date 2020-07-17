@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix'=>'dashboard','as'=>'dashboard.','namespace'=>'dashboard','middleware'=>['admin']],function(){
         Route::get('/','DashboardController@index')->name('index');
-        Route::resource('appointments','AppointmentController');
+        Route::resource('appointments','AppointmentController')->except(['destroy','create','store']);
         Route::resource('users','UserController');
     });
 });

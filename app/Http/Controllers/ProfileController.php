@@ -64,15 +64,16 @@ class ProfileController extends Controller
 
     private function changePassword($request)
     {
-        if(Hash::check($request->password , $request->user()->password))
+        $user = $request->user();
+        if(Hash::check($request->password ,$user->password))
         {
-            $request->user()->update(['password'=>$request->new_password]);
+           $user->update(['password'=>$request->new_password]);
             // return redirect()->route('profiles.show',['profile',$request->user()->profileable])
             //        ->with(['success','Password Changed']);
         }
         else
         {
-            return redirect()->route('profiles.edit',['profile' => $request->user()->profileable])
+            return redirect()->route('profiles.edit',['profile' =>$user->profileable])
                     ->withErrors(['password'=>'Wrong password']);
         }
     }
